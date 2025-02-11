@@ -44,10 +44,10 @@ Este projeto realiza a leitura de dados do sensor **MPU-6050** e registra as inf
 ## 📂 **Estrutura dos Dados Salvos**
 Cada linha do arquivo salvo no SD segue o formato:
 
-AAAA,MM,DD,HH,MM,SS,MS,AX,AY,AZ,GX,GY,GZ
+AAAA,MM,DD,HH,MM,SS,AX,AY,AZ,GX,GY,GZ
 
 Onde:
 - **AAAA, MM, DD** → Ano, mês e dia
-- **HH, MM, SS, MS** → Hora, minuto, segundo e milissegundos
+- **HH, MM, SS, MS** → Hora, minuto e segundo
 - **AX, AY, AZ** → Aceleração nos eixos X, Y e Z
 - **GX, GY, GZ** → Velocidade angular nos eixos X, Y e Z
