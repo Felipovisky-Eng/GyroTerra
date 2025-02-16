@@ -66,9 +66,9 @@ Este é um segundo código baseado na versão original, porém com uma **modific
 ```csv
 tempo_ms, ax, ay, az, gx, gy, gz
 ````
-✅ Fechamento automático após 48 horas → Se o tempo de execução ultrapassar esse limite, o arquivo é salvo e fechado.
-✅ Sincronização periódica → A cada 60 segundos, os dados são gravados no cartão SD para evitar perdas.
-✅ Parada manual via botão → Se o botão for pressionado, a gravação é interrompida e o arquivo é fechado corretamente.
+✅ **Fechamento automático após 48 horas** → Se o tempo de execução ultrapassar esse limite, o arquivo é salvo e fechado.  
+✅ **Sincronização periódica** → A cada 60 segundos, os dados são gravados no cartão SD para evitar perdas.  
+✅ **Parada manual via botão** → Se o botão for pressionado, a gravação é interrompida e o arquivo é fechado corretamente.  
 
 📜 Motivação para esta mudança
 Na primeira versão, o código utilizava um RTC (Relógio de Tempo Real) para marcar a data e a hora de cada amostra. No entanto, como o objetivo era realizar coletas longas e garantir a integridade dos dados, optamos por usar a função millis(). Dessa forma, evitamos problemas de comunicação com o RTC e reduzimos o número de componentes necessários no projeto.Esta versão facilita o pós-processamento dos dados em Python, pois fornece um tempo contínuo baseado em milissegundos.
