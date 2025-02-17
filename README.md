@@ -84,7 +84,7 @@ Na primeira versão, o código utilizava um RTC (Relógio de Tempo Real) para ma
 
 ### Descrição
 
-Este código realiza a análise de deslocamento angular a partir dos dados coletados por sensores de movimento, como giroscópios e acelerômetros. O principal objetivo é calcular e corrigir o deslocamento angular ao longo do tempo, usando a técnica de integração para obter os ângulos de pitch, roll e yaw. O código aplica filtros complementares e de Kalman para melhorar a precisão das estimativas e também considera o efeito da rotação da Terra, comparando o deslocamento real do sistema com o deslocamento esperado pela rotação do planeta.
+Este código realiza a análise de deslocamento angular a partir dos dados coletados por sensores de movimento, como giroscópios e acelerômetros. O principal objetivo é medir a velocidade anglar da terra utilizando o giroscópio e acelerometro MPU-6050. O giroscópio irá medir a velocidade angular dá terra e os dados do acelerometro serão utilizados para corrigir a inclinação do mesmo, futuramnte pode-se implementar um MPU-9265 com magnerômetro integrado para melhor correção de orientação. O código aplica filtros complementares e de Kalman para melhorar a precisão das estimativas e também considera o efeito da rotação da Terra, comparando o deslocamento real do sistema com o deslocamento esperado pela rotação do planeta.
 
 ### Funcionalidade
 
