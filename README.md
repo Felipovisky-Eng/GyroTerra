@@ -8,7 +8,7 @@ Este projeto realiza a leitura de dados do sensor **MPU-6050** e registra as inf
 - O sistema inicia a gravação ao ser ligado.
 - A escala do Giroscópio é configurada para ``250°/s``.
 - A escala so Acelerômetro é configurada para ``2g``.
-- A cada segundo, os dados do acelerômetro e giroscópio são lidos e armazenados no cartão SD.
+- A cada segundos, os dados do acelerômetro e giroscópio são lidos e armazenados no cartão SD.
 - A cada 60 segundos, os dados são sincronizados no SD para evitar perda de informações.
 - A gravação pode ser interrompida manualmente pressionando o botão.
 - O sistema também para automaticamente após **48 horas** de gravação contínua.
@@ -63,7 +63,7 @@ Este é um segundo código baseado na versão original, porém com uma **modific
 
 ### 🔧 **Diferenças desta versão**  
 ✅ **RTC Removido** → O tempo agora é medido em milissegundos desde o início da execução.  
-✅ **Registro contínuo dos dados** → A cada leitura do **MPU-6050**, os valores são salvos no cartão SD.  
+✅ **Registro contínuo dos dados** → A cada 0,5 segundos a leitura do **MPU-6050** é salva no cartão SD.  
 ✅ **Formato do arquivo de saída**:
 ```csv
 tempo_ms, ax, ay, az, gx, gy, gz
