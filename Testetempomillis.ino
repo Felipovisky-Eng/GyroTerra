@@ -28,7 +28,13 @@ void setup() {
     while (1);
   }
   Serial.println("MPU INICIALIZADO");
+  
+   // Configurar a escala do acelerômetro para ±2g
+   mpu.setFullScaleAccelRange(MPU6050_ACCEL_FS_2);
 
+  // Configurar a escala do giroscópio para ±250°/s
+   mpu.setFullScaleGyroRange(MPU6050_GYRO_FS_250);
+  
   //----------------Verificação do funcionamento do Cartão SD-------------------------//
   if (!SD.begin(10)) {
     Serial.println("Erro ao inicializar o SD!");
