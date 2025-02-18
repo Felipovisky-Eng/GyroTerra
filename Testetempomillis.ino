@@ -104,5 +104,5 @@ void loop() {
     digitalWrite(3, LOW);
   }
 
-  delay(500);  // Pequeno atraso para reduzir a frequência de gravação
+  delay(494);  // Pequeno atraso para reduzir a frequência de gravação
 }
