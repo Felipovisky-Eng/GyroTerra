@@ -8,7 +8,7 @@ import scipy.fft as fft                   # Transformada de Fourier
 
 from tkinter import filedialog            # Busca arquivos
 from scipy.interpolate import interp1d    # Calculo de interpolação
-
+from scipy.integrate import cumulative_trapezoid # Calculo da integral
 #
 #
 #
@@ -172,21 +172,21 @@ FFT_GZ_pos = FFT_GZ_norm   [idx_pos] # Componentes positivas da FFT do giroscóp
 fig, axs = plt.subplots(3, 1, figsize=(10, 8))
 
 # Plot da FFT normalizada do eixo X
-axs[0].plot(frequencia_pos, FFT_AX_pos)
+axs[0].plot(frequencia_pos, FFT_AX_pos,      color="b")
 axs[0].set_title('FFT Normalizada - Aceleração no Eixo X')
 axs[0].set_xlabel('Frequência (Hz)')
 axs[0].set_ylabel('Magnitude Normalizada')
 axs[0].grid(True)
 
 # Plot da FFT normalizada do eixo Y
-axs[1].plot(frequencia_pos, FFT_AY_pos)
+axs[1].plot(frequencia_pos, FFT_AY_pos,      color="y")
 axs[1].set_title('FFT Normalizada - Aceleração no Eixo Y')
 axs[1].set_xlabel('Frequência (Hz)')
 axs[1].set_ylabel('Magnitude Normalizada')
 axs[1].grid(True)
 
 # Plot da FFT normalizada do eixo Z
-axs[2].plot(frequencia_pos, FFT_AZ_pos)
+axs[2].plot(frequencia_pos, FFT_AZ_pos,      color="r")
 axs[2].set_title('FFT Normalizada - Aceleração no Eixo Z')
 axs[2].set_xlabel('Frequência (Hz)')
 axs[2].set_ylabel('Magnitude Normalizada')
@@ -204,22 +204,22 @@ plt.show()
 fig, axs = plt.subplots(3, 1, figsize=(10, 8))
 
 # Plot da FFT normalizada do eixo X
-axs[0].plot(frequencia_pos, FFT_GX_pos)
-axs[0].set_title('FFT Normalizada - Aceleração no Eixo X')
+axs[0].plot(frequencia_pos, FFT_GX_pos,      color="b")
+axs[0].set_title('FFT Normalizada - valocidade angular no Eixo X')
 axs[0].set_xlabel('Frequência (Hz)')
 axs[0].set_ylabel('Magnitude Normalizada')
 axs[0].grid(True)
 
 # Plot da FFT normalizada do eixo Y
-axs[1].plot(frequencia_pos, FFT_GY_pos)
-axs[1].set_title('FFT Normalizada - Aceleração no Eixo Y')
+axs[1].plot(frequencia_pos, FFT_GY_pos,      color="y")
+axs[1].set_title('FFT Normalizada - velocidade angular no Eixo Y')
 axs[1].set_xlabel('Frequência (Hz)')
 axs[1].set_ylabel('Magnitude Normalizada')
 axs[1].grid(True)
 
 # Plot da FFT normalizada do eixo Z
-axs[2].plot(frequencia_pos, FFT_GZ_pos)
-axs[2].set_title('FFT Normalizada - Aceleração no Eixo Z')
+axs[2].plot(frequencia_pos, FFT_GZ_pos,      color="r")
+axs[2].set_title('FFT Normalizada - velocidade angular no Eixo Z')
 axs[2].set_xlabel('Frequência (Hz)')
 axs[2].set_ylabel('Magnitude Normalizada')
 axs[2].grid(True)
@@ -266,21 +266,21 @@ GZ = GZ * Escala_Giroscopio  # Converte o giroscópio no eixo
 fig, axs = plt.subplots(3, 1, figsize=(10, 8))
 
 # Plot da aceleração no eixo X
-axs[0].plot(tempo, AX)
+axs[0].plot(tempo, AX,      color="b")
 axs[0].set_title('Aceleração - Eixo X')
 axs[0].set_xlabel('Tempo (s)')
 axs[0].set_ylabel('Aceleração (m/s²)')
 axs[0].grid(True)
 
 # Plot da aceleração no eixo Y
-axs[1].plot(tempo, AY)
+axs[1].plot(tempo, AY,      color="y")
 axs[1].set_title('Aceleração - Eixo Y')
 axs[1].set_xlabel('Tempo (s)')
 axs[1].set_ylabel('Aceleração (m/s²)')
 axs[1].grid(True)
 
 # Plot da aceleração no eixo Z
-axs[2].plot(tempo, AZ)
+axs[2].plot(tempo, AZ,      color="r")
 axs[2].set_title('Aceleração - Eixo Z')
 axs[2].set_xlabel('Tempo (s)')
 axs[2].set_ylabel('Aceleração (m/s²)')
@@ -296,21 +296,21 @@ plt.show()
 fig, axs = plt.subplots(3, 1, figsize=(10, 8))
 
 # Plot da velocidade angular no eixo X
-axs[0].plot(tempo, GX)
+axs[0].plot(tempo, GX,      color="b")
 axs[0].set_title('Velocidade Angular - Eixo X')
 axs[0].set_xlabel('Tempo (s)')
 axs[0].set_ylabel('Velocidade Angular (°/s)')
 axs[0].grid(True)
 
 # Plot da velocidade angular no eixo Y
-axs[1].plot(tempo, GY)
+axs[1].plot(tempo, GY,      color="y")
 axs[1].set_title('Velocidade Angular - Eixo Y')
 axs[1].set_xlabel('Tempo (s)')
 axs[1].set_ylabel('Velocidade Angular (°/s)')
 axs[1].grid(True)
 
 # Plot da velocidade angular no eixo Z
-axs[2].plot(tempo, GZ)
+axs[2].plot(tempo, GZ,      color="r")
 axs[2].set_title('Velocidade Angular - Eixo Z')
 axs[2].set_xlabel('Tempo (s)')
 axs[2].set_ylabel('Velocidade Angular (°/s)')
@@ -332,32 +332,35 @@ plt.show()
 
 # Calcula a integral da velocidade angular para obter o ângulo
 
-Ang_GX = np.cumsum(GX * Mdiferenca)  
-Ang_GY = np.cumsum(GY * Mdiferenca)  
-Ang_GZ = np.cumsum(GZ * Mdiferenca)
+
+
+Ang_GX = cumulative_trapezoid(GX, tempo, initial=0)
+Ang_GY = cumulative_trapezoid(GY, tempo, initial=0)
+Ang_GZ = cumulative_trapezoid(GZ, tempo, initial=0)
+
 
 # Criação dos gráficos para deslocamento angular nos três eixos
 fig, axs = plt.subplots(3, 1, figsize=(10, 8))
 
 # Plot do deslocamento angular no eixo X
-axs[0].plot(tempo, Ang_GX)
+axs[0].plot(tempo, Ang_GX,      color="b")
 axs[0].set_title('Deslocamento Angular - Eixo X')
 axs[0].set_xlabel('Tempo (s)')
-axs[0].set_ylabel('Deslocamento Angular (° ou rad)')
+axs[0].set_ylabel('Deslocamento Angular (°)')
 axs[0].grid(True)
 
 # Plot do deslocamento angular no eixo Y
-axs[1].plot(tempo, Ang_GY)
+axs[1].plot(tempo, Ang_GY,      color="y")
 axs[1].set_title('Deslocamento Angular - Eixo Y')
 axs[1].set_xlabel('Tempo (s)')
-axs[1].set_ylabel('Deslocamento Angular (° ou rad)')
+axs[1].set_ylabel('Deslocamento Angular (°)')
 axs[1].grid(True)
 
 # Plot do deslocamento angular no eixo Z
-axs[2].plot(tempo, Ang_GZ)
+axs[2].plot(tempo, Ang_GZ,      color="r")
 axs[2].set_title('Deslocamento Angular - Eixo Z')
 axs[2].set_xlabel('Tempo (s)')
-axs[2].set_ylabel('Deslocamento Angular (° ou rad)')
+axs[2].set_ylabel('Deslocamento Angular (°)')
 axs[2].grid(True)
 
 # Ajuste para não sobrepor os subgráficos
@@ -431,17 +434,18 @@ for i in range(len(tempo)):
 
 
 # Plot do deslocamento angular corrigido
-plt.plot(tempo, theta_kalman_hist, label="Yaw Corrigido (Filtro de Kalman)")
-plt.plot(tempo, angle_pitch, label="Pitch Corrigido")
-plt.plot(tempo, angle_roll, label="Roll Corrigido")
+
+plt.plot(tempo, angle_pitch_hist,  label="Pitch Corrigido (Filtro complementar)", color="b")
+plt.plot(tempo, angle_roll_hist,   label="Roll Corrigido (Filtro complementar)",  color="y")
+plt.plot(tempo, theta_kalman_hist, label="Yaw Corrigido (Filtro de Kalman)",      color="r")
 plt.xlabel("Tempo (s)")
 plt.ylabel("Ângulo (°)")
 plt.legend()
 plt.grid()
 plt.show()
 
-ANG_GX_CORRIGIDO = angle_pitch
-ANG_GY_CORRIGIDO = angle_roll
+ANG_GX_CORRIGIDO = angle_pitch_hist
+ANG_GY_CORRIGIDO = angle_roll_hist
 ANG_GZ_CORRIGIDO = theta_kalman_hist
 
 #
@@ -467,7 +471,7 @@ print(f"Erro: {ANG_GZ_CORRIGIDO[-1] - Deslocamento_calculado:.2f} ° ")      # C
 # Criação do gráfico para o deslocamento angular no eixo Z
 plt.figure(figsize=(10, 6))
 plt.plot(tempo, ANG_GZ_CORRIGIDO,      color="k",   label='Deslocamento Real corrigido')
-plt.plot(tempo, ANG_GZ,                color="b",   label='Deslocamento Real')
+plt.plot(tempo, Ang_GZ,                color="b",   label='Deslocamento Real')
 plt.plot(tempo, Deslocamento_esperado, color="r",   label='Deslocamento Esperado')
 plt.title('Deslocamento Angular - Eixo Z')
 plt.xlabel('Tempo (s)')
