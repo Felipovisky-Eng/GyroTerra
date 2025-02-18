@@ -118,3 +118,6 @@ Para executar este código, é necessário ter as seguintes bibliotecas Python i
 - `pandas`
 - `tkinter`
 
+# Arquivos de Teste
+
+No Githib estará disponível arquivos ``.txt`` para testes do código em ``Python`` *Gyromillis*, esses arquivos são originados das coletas do MPU-6050 utilizando o código em ``C++`` *Testetempomillis*.
