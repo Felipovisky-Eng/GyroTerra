@@ -6,6 +6,8 @@ Este projeto realiza a leitura de dados do sensor **MPU-6050** e registra as inf
 
 ## 🚀 **Funcionamento**
 - O sistema inicia a gravação ao ser ligado.
+- A escala do Giroscópio é configurada para ``250°/s``.
+- A escala so Acelerômetro é configurada para ``2g``.
 - A cada segundo, os dados do acelerômetro e giroscópio são lidos e armazenados no cartão SD.
 - A cada 60 segundos, os dados são sincronizados no SD para evitar perda de informações.
 - A gravação pode ser interrompida manualmente pressionando o botão.
