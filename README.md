@@ -14,8 +14,8 @@ Este projeto realiza a leitura de dados do sensor **MPU-6050** e registra as inf
 - O sistema também para automaticamente após **48 horas** de gravação contínua.
 
 ## 🛠 **Componentes Utilizados**
-- **Microcontrolador**: ATmega328P (Arduino ou similar)
-- **Sensor de Movimento**: MPU-6050
+- **Microcontrolador**: ATmega328P (Arduino)
+- **Sensor IMU**: MPU-6050
 - **Módulo RTC**: DS1307
 - **Cartão SD** para armazenamento
 - **Botão de parada** da gravação
