@@ -9,6 +9,8 @@ import scipy.fft as fft                   # Transformada de Fourier
 from tkinter import filedialog            # Busca arquivos
 from scipy.interpolate import interp1d    # Calculo de interpolação
 from scipy.integrate import cumulative_trapezoid # Calculo da integral
+from scipy import signal                  # Calculo de filtros
+
 #
 #
 #
@@ -76,10 +78,13 @@ Nome = Nome.replace("_", " ") # Tira o "_" e subtitui por um espaço
 
 
 # Converte os dados para numpy.ndarray com tipo float
+
 tempo = tempo.to_numpy(dtype=float)  # Converte para numpy.ndarray
+
 AX    = AX.to_numpy(dtype=float)     # Converte para numpy.ndarray
 AY    = AY.to_numpy(dtype=float)     # Converte para numpy.ndarray
 AZ    = AZ.to_numpy(dtype=float)     # Converte para numpy.ndarray
+
 GX    = GX.to_numpy(dtype=float)     # Converte para numpy.ndarray
 GY    = GY.to_numpy(dtype=float)     # Converte para numpy.ndarray
 GZ    = GZ.to_numpy(dtype=float)     # Converte para numpy.ndarray
@@ -98,6 +103,9 @@ N = len(tempo) # Número de pontos
 print(f"Frequência de amostragem estimada: {FS:.2f} Hz")          # Calcula a frequência de amostragem
 print(f"Número de pontos: {N}")                                   # Calcula o número de pontos
 print(f"Tempo total de gravação: {tempo[-1]:.2f} segundos")       # Calcula o tempo total de gravação
+
+print(f"Tempo total de gravação: {((tempo[-1])/60):.2f} minutos")       # Calcula o tempo total de gravação
+
 
 #
 #
@@ -166,7 +174,6 @@ FFT_GZ_pos = FFT_GZ_norm   [idx_pos] # Componentes positivas da FFT do giroscóp
 #
 #
 #
-
 
 # Criação do gráfico com FFT normalizada para acelaração nos três eixos
 fig, axs = plt.subplots(3, 1, figsize=(10, 8))
@@ -325,6 +332,32 @@ plt.show()
 #
 #
 #
+# filtragem do sinal
+#
+#
+#
+
+# Função do filtro passa-baixa
+
+
+b, a = signal.butter(4, 0.25, btype="lowpass", fs=FS)
+
+def filtro_passa_faixa(sinal, b, a):
+    sinal_filtrado = signal.filtfilt(b, a, sinal)
+
+    return sinal_filtrado
+
+
+AX = filtro_passa_faixa(AX, b, a)  # Filtra o sinal de aceleração no eixo X
+AY = filtro_passa_faixa(AY, b, a)  # Filtra o sinal de aceleração no eixo Y
+AZ = filtro_passa_faixa(AZ, b, a)  # Filtra o sinal de aceleração no eixo Z
+
+GX = filtro_passa_faixa(GX, b, a)  # Filtra o sinal de velocidade angular no eixo X
+GY = filtro_passa_faixa(GY, b, a)  # Filtra o sinal de velocidade angular no eixo Y
+GZ = filtro_passa_faixa(GZ, b, a)  # Filtra o sinal de velocidade angular no eixo Z
+
+#
+#
 # Calculo da integral simples da velcidade angular em cada eixo
 #
 #
@@ -378,13 +411,14 @@ plt.show()
 #
 
 
+
 # Calculando os ângulos de pitch e roll
 
 pitch = np.arctan2 (AY, np.sqrt(AX**2 + AZ**2))  # Inclinação no eixo X
 roll  = np.arctan2(-AX, np.sqrt(AY**2 + AZ**2))  # Inclinação no eixo Y
 
 # Inicializando os ângulos corrigidos
-alpha = 0.98  # Peso do giroscópio e do acelerômetro (filtro complementar)
+alpha = 0.93  # Peso do giroscópio e do acelerômetro (filtro complementar)
 
 angle_pitch_hist = np.zeros(len(tempo))
 angle_roll_hist = np.zeros(len(tempo))
@@ -400,7 +434,7 @@ for i in range(1, len(tempo)):
 
 # Inicialização do estado
 theta_kalman = 0  # Estimativa inicial do ângulo Yaw
-bias_kalman = 0  # Viés estimado do giroscópio
+bias_kalman = 0.183  # Viés estimado do giroscópio
 
 # Incertezas (ajustáveis)
 P = np.array([[1, 0], [0, 1]])  # Matriz de covariância
